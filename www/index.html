@@ -62,7 +62,7 @@ if(x||m||k)h+=`<span class=c1>${x||m?p3(k):k}</span><span class=c2>${p3(b)}</spa
 const pick=l=>(window.speechSynthesis?speechSynthesis.getVoices():[]).find(v=>v.lang.toLowerCase().replace("_","-").startsWith(l));
 const msg=t=>{document.getElementById("st").textContent=t};
 function spk(text,lang,rate){if(lang=="uz"){const t=text.split(" ");if(t.every(w=>REC[w])){seq(t,rate);msg("🎙 Sizning ovozingiz");return}}if(NAT){natSpk(text,lang,rate);return}const s=window.speechSynthesis;
-if(!s||!window.SpeechSynthesisUtterance){msg("❌ Bu brauzer ovoz chiqara olmaydi. "🎙 Ovoz" bo'limida o'z ovozingizni yozing yoki ilovani (APK) o'rnating.");return}
+if(!s||!window.SpeechSynthesisUtterance){msg("❌ Bu brauzer ovoz chiqara olmaydi. Ovoz bo'limida o'z ovozingizni yozing yoki ilovani (APK) o'rnating.");return}
 let v=pick(lang);if(!v&&lang=="uz")v=pick("tr")||pick("az")||pick("kk");
 const u=new SpeechSynthesisUtterance(text);window._u=u;
 if(v){u.voice=v;u.lang=v.lang}else u.lang=lang=="uz"?"uz-UZ":"ru-RU";
