@@ -61,8 +61,8 @@ if(x||m||k)h+=`<span class=c1>${x||m?p3(k):k}</span><span class=c2>${p3(b)}</spa
 /* ovoz */
 const pick=l=>(window.speechSynthesis?speechSynthesis.getVoices():[]).find(v=>v.lang.toLowerCase().replace("_","-").startsWith(l));
 const msg=t=>{document.getElementById("st").textContent=t};
-function spk(text,lang,rate){if(lang=="uz"){const t=text.split(" ");if(t.every(w=>REC[w])){seq(t,rate);msg("🎙 Sizning ovozingiz");return}}const s=window.speechSynthesis;
-if(!s||!window.SpeechSynthesisUtterance){msg("❌ Bu brauzer ovoz chiqara olmaydi. Havolani Chrome yoki Safari'da oching.");return}
+function spk(text,lang,rate){if(lang=="uz"){const t=text.split(" ");if(t.every(w=>REC[w])){seq(t,rate);msg("🎙 Sizning ovozingiz");return}}if(NAT){natSpk(text,lang,rate);return}const s=window.speechSynthesis;
+if(!s||!window.SpeechSynthesisUtterance){msg("❌ Bu brauzer ovoz chiqara olmaydi. "🎙 Ovoz" bo'limida o'z ovozingizni yozing yoki ilovani (APK) o'rnating.");return}
 let v=pick(lang);if(!v&&lang=="uz")v=pick("tr")||pick("az")||pick("kk");
 const u=new SpeechSynthesisUtterance(text);window._u=u;
 if(v){u.voice=v;u.lang=v.lang}else u.lang=lang=="uz"?"uz-UZ":"ru-RU";
@@ -71,7 +71,7 @@ msg(v?"🔊 Ovoz: "+v.name:"🔊 Standart ovoz (telefon ovozi va jim rejimini te
 s.cancel();setTimeout(()=>{s.resume();s.speak(u)},80)}
 const sayN=(n,r)=>spk(say(n),"uz",r);
 function chk(){const n=document.getElementById("note");
-const show=tab<2&&window.speechSynthesis&&!pick("uz");
+const show=!NAT&&tab<2&&window.speechSynthesis&&!pick("uz");
 n.hidden=!show;if(show)n.textContent="ℹ️ Bu qurilmada o'zbekcha ovoz topilmadi, ovoz o'xshash tilda o'qiydi yoki jim bo'lishi mumkin. Matn doim ko'rinib turadi.";}
 if(window.speechSynthesis)speechSynthesis.onvoiceschanged=chk;
 
@@ -82,6 +82,10 @@ const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
 const shuf=a=>a.map(x=>[Math.random(),x]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
 
 let tab=0,ln=1287621,li=0,parr=[];
+const NAT=!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());
+async function natSpk(text,lang,rate){try{const T=Capacitor.registerPlugin("TextToSpeech");let l=lang=="uz"?"uz-UZ":"ru-RU";
+if(lang=="uz"){const r=await T.isLanguageSupported({lang:l}).catch(()=>({supported:false}));if(!r.supported)l="tr-TR"}
+await T.stop().catch(()=>{});msg("🔊 Ovoz: "+l);await T.speak({text,lang:l,rate:rate||.85,pitch:1,volume:1})}catch(e){msg("❌ Ovoz xatosi: "+(e.message||e))}}
 /* o'z ovozini yozish */
 const W=["nol","bir","ikki","uch","to'rt","besh","olti","yetti","sakkiz","to'qqiz","o'n","yigirma","o'ttiz","qirq","ellik","oltmish","yetmish","sakson","to'qson","yuz","ming","million","milliard"];
 let REC={},cw=0,mr=null,DB,sq=0;
