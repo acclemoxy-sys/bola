@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>O'rganamiz!</title>
 <style>
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#fff8ec;--card:#fff;--tx:#2b2540;--mut:#6b6485;--pri:#7c4dff;--ok:#d8f5e3;--bad:#fde0e0;--c0:#e5484d;--c1:#2e7de9;--c2:#2e9e5b;--bd:#e7dcc8}
+:root{box-sizing:border-box;padding-top:var(--safe-area-inset-top,env(safe-area-inset-top,0px));padding-bottom:var(--safe-area-inset-bottom,env(safe-area-inset-bottom,0px));--bg:#fff8ec;--card:#fff;--tx:#2b2540;--mut:#6b6485;--pri:#7c4dff;--ok:#d8f5e3;--bad:#fde0e0;--c0:#e5484d;--c1:#2e7de9;--c2:#2e9e5b;--bd:#e7dcc8}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1830;--card:#2a2444;--tx:#f3efff;--mut:#b5acd6;--pri:#a78bfa;--ok:#1f5c3a;--bad:#6b2a2e;--c0:#ff8b8b;--c1:#7db4ff;--c2:#6ee7a0;--bd:#3d3560}}
 :root[data-theme="dark"]{--bg:#1c1830;--card:#2a2444;--tx:#f3efff;--mut:#b5acd6;--pri:#a78bfa;--ok:#1f5c3a;--bad:#6b2a2e;--c0:#ff8b8b;--c1:#7db4ff;--c2:#6ee7a0;--bd:#3d3560}
 *{box-sizing:border-box}
@@ -40,7 +40,7 @@ input{font:inherit;font-size:22px;width:100%;max-width:230px;padding:8px;border-
 </style></head>
 <body><main>
 <h1>📚 O'rganamiz!</h1>
-<div class="tabs" id="tabs" style="grid-template-columns:repeat(4,1fr)"></div><div class="tabs" id="sub" style="grid-template-columns:repeat(auto-fit,minmax(90px,1fr))"></div><div class="row small" id="gp"></div>
+<div class="tabs" id="tabs" style="grid-template-columns:repeat(5,1fr)"></div><div class="tabs" id="sub" style="grid-template-columns:repeat(auto-fit,minmax(90px,1fr))"></div><div class="row small" id="gp"></div>
 <div class="note" id="note" hidden></div>
 <div class="legend" id="st" style="text-align:center;margin-bottom:6px"></div>
 <div id="app"></div>
@@ -159,15 +159,15 @@ function ansL(i){const q=LQ;if(q.done)return;q.done=true;q.pick=i;if(q.opts[i]==
 /* ===== Bo'limlar, arab tili, o'yinlar ===== */
 let sec=0,sub=0,gk={0:"old",1:"old",2:"read"},ai=0,ROWS=[],RL=[];
 const GQ={sc:0,st:0,q:null,rev:0,done:0,pick:-1};
-const SUBS=[["📖 O'rganish","🎮 O'yinlar"],["📖 Harflar","🎮 O'yinlar"],["🔤 Harflar","📜 Qoidalar","📚 Darslar","🎮 O'yinlar"],[]];
-const GMN=[[["old","🎮 Son o'yini"],["read","📖 Sonni o'qi"]],[["old","🎮 Harf o'yini"],["read","📖 So'zni o'qi"],["hw","👂 So'zni eshit"],["wp","🖼 So'z→rasm"],["lw","🔤 Harfli so'z"]],[["read","📖 O'qi"],["hw","👂 Eshit→yozuv"],["wr","👀 Yozuv→o'qilishi"],["lt","🔤 Harf nomi"],["id","🔗 Ulab o'qish"]]];
+const SUBS=[["📖 O'rganish","📚 Darslar","🎮 O'yinlar"],["📖 Harflar","📚 Darslar","🎮 O'yinlar"],["🔤 Harflar","📜 Qoidalar","📚 Darslar","🎮 O'yinlar"],["🔤 Harflar","📚 Darslar","🎮 O'yinlar"],[]];
+const GMN=[[["old","🎮 Son o'yini"],["read","📖 Sonni o'qi"]],[["old","🎮 Harf o'yini"],["read","📖 So'zni o'qi"],["hw","👂 So'zni eshit"],["wp","🖼 So'z→rasm"],["lw","🔤 Harfli so'z"]],[["read","📖 O'qi"],["hw","👂 Eshit→yozuv"],["wr","👀 Yozuv→o'qilishi"],["lt","🔤 Harf nomi"],["id","🔗 Ulab o'qish"]],[["read","📖 So'zni o'qi"],["hw","👂 Eshit→harf"],["wl","🔤 Birinchi harf"],["wp","🖼 So'z→rasm"],["lw","🔠 Harfli so'z"]]];
 const bt=(on,fn,t)=>`<button class="${on?"on":""}" onclick="${fn}">${t}</button>`;
-function render(){const S=SUBS[sec];if(sub>=S.length)sub=0;
-document.getElementById("tabs").innerHTML=["🔢 Sonlar","🇷🇺 Rus","🕌 Arab","🎙 Ovoz"].map((t,i)=>bt(i==sec,`sec=${i};sub=0;GQ.q=null;render()`,t)).join("");
+function render(){const S=SUBS[sec];if(sub>=S.length)sub=0;CUR=LESS[sec]||[];
+document.getElementById("tabs").innerHTML=["🔢 Sonlar","🇷🇺 Rus","🕌 Arab","🔤 Lotin","🎙 Ovoz"].map((t,i)=>bt(i==sec,`sec=${i};sub=0;GQ.q=null;render()`,t)).join("");
 document.getElementById("sub").innerHTML=S.map((t,i)=>bt(i==sub,`sub=${i};GQ.q=null;render()`,t)).join("");
-const games=sec<3&&sub==S.length-1;
+const games=sec<4&&sub==S.length-1;
 document.getElementById("gp").innerHTML=games?GMN[sec].map(([k,t])=>bt(gk[sec]==k,`gk[${sec}]='${k}';GQ.q=null;render()`,t)).join(""):"";
-if(sec==3)vRec();else if(!games)[[vLearn],[vLet2],[vAr,vRules,vDars]][sec][sub]();else if(gk[sec]=="old")(sec?vLQ:vNQ)();else newG();
+if(sec==4)vRec();else if(!games)[[vLearn,vDars],[vLet2,vDars],[vAr,vRules,vDars],[vLat,vDars]][sec][sub]();else if(gk[sec]=="old")(sec?vLQ:vNQ)();else newG();
 chk()}
 
 /* arab harflari: [harf, nomi, TTS nomi, tovushi] */
@@ -294,7 +294,7 @@ app.innerHTML=`<div class=grid>${L.map((x,i)=>`<button class="${i==li?"on":""}" 
 /* o'yin mexanikasi */
 const pk2=(a,n,x,f)=>{const u=[],s=new Set([f(x)]);for(const y of shuf(a)){if(!s.has(f(y))){s.add(f(y));u.push(y);if(u.length==n)break}}return u};
 const pk=(a,n,ex)=>shuf(a.filter(x=>x!=ex)).slice(0,n);
-function mkQ(){const s=sec,k=gk[s];
+function mkQ(){const s=sec,k=gk[s];if(s==3)return mkLat(k);
 if(s==0){const n=rnd(1,10**rnd(1,6));return{t:"Sonni o'qing, keyin tekshiring",show:`<div id=big>${bigNum(n)}</div>`,sp:[say(n),"uz"],rev:say(n)}}
 if(s==1){const x=RWF[rnd(0,RWF.length-1)],tx=x.e+" "+x.w;
 if(k=="read")return{t:"So'zni o'qing, keyin tekshiring",show:`<div class=word style="font-size:44px">${x.w}</div>`,sp:[x.w,"ru"],rev:tx};
@@ -337,7 +337,7 @@ for(let g=0;g<6;g++){const ids=[0,1,2,3,4].map(x=>g*5+x).filter(x=>x<29);LES.pus
 LES.push({h:"Qoidalar",t:"Tashdid va tanvin",k:"tsh"},{h:"Qoidalar",t:"Quyosh va oy harflari",k:"sun"},{h:"Qoidalar",t:"Ulab o'qish (idg'om)",k:"idg"});
 const LS={id:-1,n:0,ok:0,q:null,done:0,pick:-1,fin:0,seen:new Set()};
 const gph=j=>`<span class="ar s" style="margin:0">${AL[j][0]}</span>`;
-function lq(l,n){
+function lq0(l,n){
 if(l.k=="let"){const hi=l.ids[l.ids.length-1],pool=l.ids.slice();if(l.ids[0]&&Math.random()<.4)pool.push(rnd(0,l.ids[0]-1));
 const i=pool[rnd(0,pool.length-1)],c=AL[i][0],cand=[...Array(Math.max(6,hi+1)).keys()],o=shuf([i,...pk2(cand,3,i,gl)]),ty=n%3,fs=NC.includes(i)?[c,ZW+c]:[c,c+ZW,ZW+c+ZW,ZW+c],f=l.all?fs[rnd(0,fs.length-1)]:c,sp=[AL[i][2],"ar"],fb=`${c} — ${gl(i)}`;
 if(ty==0)return{t:"Eshiting: qaysi harf?",show:"",sp,opts:o.map(gph),ans:o.indexOf(i),fb,key:"a"+i};
@@ -358,16 +358,105 @@ if(l.k=="sun"){const P=SUN.concat(MOON),x=P[rnd(0,P.length-1)],moon=x[1]==x[2],w
 return{t:"Qanday o'qiladi?",show:`<div class=ar>${x[0]}</div>`,sp:[x[0],"ar"],opts:o,ans:o.indexOf(x[2]),fb:`${x[1]} → ${x[2]}`+(moon?" (oy harfi: lom o'qiladi)":" (quyosh harfi: lom o'qilmaydi)"),key:"s"+x[0]}}
 const x=ID[rnd(0,ID.length-1)],o=shuf([...new Set([x[2],x[1],...pk2(ID,2,x,y=>y[2]).map(y=>y[2])])]);
 return{t:"Ulab qanday o'qiladi?",show:`<div class=ar>${x[0]}</div>`,sp:[x[0],"ar"],opts:o,ans:o.indexOf(x[2]),fb:`${x[1]} → ${x[2]}`,key:"i"+x[0]}}
-function vDars(){LS.id=-1;const nx=LES.findIndex((l,i)=>!(LP["d"+i]>=8)),dn=LES.filter((l,i)=>LP["d"+i]>=8).length;
-app.innerHTML=`<div class=score>✅ ${dn}/${LES.length} dars bajarildi</div><div class=legend style="text-align:center;margin-bottom:6px">Darsni bajarish uchun 10 savoldan kamida 8 tasiga to'g'ri javob bering</div>`+LES.map((l,i)=>`${i==0||l.h!=LES[i-1].h?`<div class=q style="margin:12px 0 4px;text-align:left"><b>${l.h}</b></div>`:""}<button class="${i==nx?"on":""}" style="width:100%;margin:3px 0;display:flex;justify-content:space-between;align-items:center;gap:8px" onclick="lStart(${i})"><span>${LP["d"+i]>=8?"✅":i==nx?"▶️":"⬜"} ${i+1}. ${l.t}</span><span class="ar s" style="margin:0;font-size:24px">${l.sub||""}</span></button>`).join("")}
+function vDars(){LS.id=-1;const nx=CUR.findIndex((l,i)=>!(LP[lk(i)]>=8)),dn=CUR.filter((l,i)=>LP[lk(i)]>=8).length;
+app.innerHTML=`<div class=score>✅ ${dn}/${CUR.length} dars bajarildi</div><div class=legend style="text-align:center;margin-bottom:6px">Darsni bajarish uchun 10 savoldan kamida 8 tasiga to'g'ri javob bering</div>`+CUR.map((l,i)=>`${i==0||l.h!=CUR[i-1].h?`<div class=q style="margin:12px 0 4px;text-align:left"><b>${l.h}</b></div>`:""}<button class="${i==nx?"on":""}" style="width:100%;margin:3px 0;display:flex;justify-content:space-between;align-items:center;gap:8px" onclick="lStart(${i})"><span>${LP[lk(i)]>=8?"✅":i==nx?"▶️":"⬜"} ${i+1}. ${l.t}</span><span class="ar s" style="margin:0;font-size:24px;${sec==2?"":"direction:ltr;font-family:inherit"}">${l.sub||""}</span></button>`).join("")}
 function lStart(i){LS.id=i;LS.n=0;LS.ok=0;LS.fin=0;LS.seen=new Set();lNext()}
-function lNext(){let q;for(let t=0;t<8;t++){q=lq(LES[LS.id],LS.n);if(!LS.seen.has(q.key))break}LS.seen.add(q.key);LS.q=q;LS.done=0;LS.pick=-1;lRender();if(q.sp&&!q.show)lSp(0)}
+function lNext(){let q;for(let t=0;t<8;t++){q=lq(CUR[LS.id],LS.n);if(!LS.seen.has(q.key))break}LS.seen.add(q.key);LS.q=q;LS.done=0;LS.pick=-1;lRender();if(q.sp&&!q.show)lSp(0)}
 function lSp(a){const q=LS.q,s=(a&&q.sa)||q.sp;if(s)spk(s[0],s[1],.8)}
 function lRender(){const q=LS.q;
-if(LS.fin){const ok=LS.ok>=8,nx=LS.id+1<LES.length;app.innerHTML=`<div class=card><div style="font-size:60px">${ok?"🎉":"💪"}</div><div class=fb>${LS.ok}/10 ${ok?"— dars bajarildi ✅":"— yana urinib ko'ring (kamida 8 kerak)"}</div><div class=row><button onclick="lStart(${LS.id})">🔁 Qayta</button>${ok&&nx?`<button class=pri onclick="lStart(${LS.id+1})">Keyingi dars ➜</button>`:""}<button onclick="vDars()">📚 Darslar</button></div></div>`;return}
+if(LS.fin){const ok=LS.ok>=8,nx=LS.id+1<CUR.length;app.innerHTML=`<div class=card><div style="font-size:60px">${ok?"🎉":"💪"}</div><div class=fb>${LS.ok}/10 ${ok?"— dars bajarildi ✅":"— yana urinib ko'ring (kamida 8 kerak)"}</div><div class=row><button onclick="lStart(${LS.id})">🔁 Qayta</button>${ok&&nx?`<button class=pri onclick="lStart(${LS.id+1})">Keyingi dars ➜</button>`:""}<button onclick="vDars()">📚 Darslar</button></div></div>`;return}
 app.innerHTML=`<div class=score>${LS.id+1}-dars · ${LS.n+1}/10 · ✅ ${LS.ok}</div><div class=card><div class=q>${q.t}</div>${q.show}`+(q.sp?`<div class=row><button class=pri onclick=lSp(0)>🔊 Eshitish</button></div>`:"")+`<div class=opts>`+q.opts.map((o,i)=>`<button class="opt ${LS.done?(i==q.ans?"good":i==LS.pick?"bad":""):""}" style="font-size:20px" onclick="lAns(${i})">${o}</button>`).join("")+`</div>`+(LS.done?`<div class=fb>${LS.pick==q.ans?"🎉 Barakalla!":"To'g'ri javob:"} ${q.fb}</div><button class=pri onclick=lNx()>${LS.n==9?"Tugatish":"Keyingisi ➜"}</button>`:"")+`</div>`}
 function lAns(i){if(LS.done)return;LS.done=1;LS.pick=i;if(i==LS.q.ans)LS.ok++;lRender();lSp(1)}
-function lNx(){LS.n++;if(LS.n>=10){LS.fin=1;LP["d"+LS.id]=Math.max(LP["d"+LS.id]||0,LS.ok);saveP();lRender()}else lNext()}
+function lNx(){LS.n++;if(LS.n>=10){LS.fin=1;LP[lk(LS.id)]=Math.max(LP[lk(LS.id)]||0,LS.ok);saveP();lRender()}else lNext()}
 
-render();loadRec().then(()=>{if(sec==3)vRec()});
+/* ===== Lotin alifbosi, Sonlar va Rus darslari ===== */
+const lk=i=>(sec==2?"d":"s"+sec+"d")+i;
+const LTL="A B D E F G H I J K L M N O P Q R S T U V X Y Z O‘ G‘ Sh Ch Ng".split(" "),LTN="a be de e fe ge he i je ke el em en o pe qe er es te u ve xe ye ze o‘ g‘e she che nge".split(" "),LTU=["A","E","I","O","U","O‘"];
+const LW=`archa🎄 ari🐝 ayiq🐻 avtobus🚌
+baliq🐟 bola👦 bulut☁️ bodring🥒
+daraxt🌳 daftar📓 dengiz🌊 do‘ppi🧢
+eshik🚪 echki🐐 ekran🖥️ eshak
+fil🐘 futbol⚽ fotoapparat📷 fasl
+gul🌹 gitara🎸 gilos🍒 globus🌍
+hayvon🐾 hovli🏡 hilol🌙 havo🌤️
+igna🪡 it🐕 issiq🔥 ilon🐍
+jirafa🦒 jo‘ja🐥 jun🧶 jadval📅
+kitob📖 kuchuk🐶 kalit🔑 kema🚢
+lola🌷 limon🍋 lampa💡 lochin🦅
+mushuk🐱 maktab🏫 mashina🚗 meva🍎
+non🍞 nok🍐 nur✨ nay
+ot🐴 olma🍎 oyna🪟 oy🌙
+pomidor🍅 piyoz🧅 poyezd🚆 pichoq🔪
+qalam✏️ qush🐦 qo‘y🐑 qovun🍈
+rasm🖼️ robot🤖 radio📻 raketa🚀
+sabzi🥕 soat⏰ sichqon🐭 savat🧺
+tuya🐪 tarvuz🍉 toj👑 tovuq🐔
+uy🏠 uzum🍇 ustoz🧑‍🏫 uzuk💍
+velosiped🚲 vanna🛁 vertolyot🚁 vaza🏺
+xo‘roz🐓 xarita🗺️ xat✉️ xona🛏️
+yo‘l🛣️ yulduz⭐ yong‘oq🌰 yaproq🍃
+zebra🦓 zanjir⛓️ zaytun🫒 zamburug‘🍄
+o‘rdak🦆 o‘rmon🌲 o‘rik🍑 o‘yinchoq🧸
+g‘isht🧱 g‘alla🌾 g‘or🕳️ g‘oz
+shar🎈 shahar🏙️ shisha🍾 shokolad🍫
+choy🍵 chelak🪣 chiroq💡 chumchuq🐦
+tong🌅 dengiz🌊 qo‘ng‘iroq🔔 rang🎨`.split("\n").map(l=>l.trim().split(/\s+/).map(t=>{const m=t.match(/^([A-Za-z‘’-]+)(.*)$/u);return{w:m[1],e:m[2]}}));
+const LWF=LW.flatMap((a,i)=>a.map(x=>({w:x.w,e:x.e,i})));
+const lgl=i=>LTL[i]+" "+LTL[i].toLowerCase();
+const hlL=(w,i)=>{const lo=LTL[i].toLowerCase(),re={o:"o(?!‘)",g:"(?<!n)g(?!‘)",s:"s(?!h)",h:"(?<![sc])h",n:"n(?!g)"}[lo]||lo;return w.replace(new RegExp(re,"g"),m=>`<b>${m}</b>`)};
+const startL=w=>{const l=w.toLowerCase();for(const d of["o‘","g‘","sh","ch"])if(l.startsWith(d))return LTL.indexOf(d[0].toUpperCase()+d[1]);return LTL.indexOf(w[0].toUpperCase())};
+let ti=0;
+function vLat(){const w=LW[ti],lo=LTL[ti].toLowerCase();
+app.innerHTML=`<div class=grid>${LTL.map((x,i)=>`<button class="${i==ti?"on":""}" style="font-size:17px" onclick="ti=${i};vLat()">${x}</button>`).join("")}</div>
+<div class=card><div class=letter>${LTL[ti]} ${lo}</div><div class=q>Nomi: <b>${LTN[ti]}</b> &nbsp;|&nbsp; <b>${LTU.includes(LTL[ti])?"unli":"undosh"}</b> harf</div>
+<div class=row><button class=pri onclick="spk(LTN[ti],'uz',.7)">🔊 Harf</button><button onclick="ti=(ti+28)%29;vLat()">⬅️</button><button onclick="ti=(ti+1)%29;vLat()">➡️</button></div></div>
+<div class=card><div class=q>${LTL[ti]} harfi qatnashgan so'zlar (bosing, eshiting)</div>${w.map((x,j)=>`<button style="width:100%;margin:4px 0;display:flex;align-items:center;gap:10px" onclick="spk(LW[ti][${j}].w,'uz',.7)"><span style="font-size:34px">${x.e}</span><span class=word style="margin:0">${hlL(x.w,ti)}</span></button>`).join("")}</div>`}
+function mkLat(k){const x=LWF[rnd(0,LWF.length-1)],tx=x.e+" "+x.w,A=[...Array(29).keys()];
+if(k=="read")return{t:"So'zni o'qing, keyin tekshiring",show:`<div class=word style="font-size:44px">${x.w}</div>`,sp:[x.w,"uz"],rev:tx};
+if(k=="hw"){const i=rnd(0,28),o=shuf([i,...pk2(A,3,i,j=>j)]);return{t:"Eshiting: qaysi harf?",show:"",sp:[LTN[i],"uz"],opts:o.map(lgl),ans:o.indexOf(i),fb:lgl(i)}}
+if(k=="wl"){const s=startL(x.w),o=shuf([s,...pk2(A.slice(0,28),3,s,j=>j)]);return{t:"Bu so'z qaysi harfdan boshlanadi?",show:`<div class=word style="font-size:44px">${tx}</div>`,sp:[x.w,"uz"],opts:o.map(lgl),ans:o.indexOf(s),fb:lgl(s)+" — "+tx}}
+if(k=="wp"){const E=LWF.filter(y=>y.e),y=E[rnd(0,E.length-1)],o=shuf([y,...pk2(E,3,y,z=>z.e)]);return{t:"Bu so'z qaysi rasm?",show:`<div class=word style="font-size:44px">${y.w}</div>`,sp:[y.w,"uz"],opts:o.map(z=>`<span style="font-size:44px">${z.e}</span>`),ans:o.indexOf(y),fb:y.e+" "+y.w}}
+const st=y=>startL(y.w),pl=A.slice(0,28).filter(i=>LWF.some(y=>st(y)==i)),i=pl[rnd(0,pl.length-1)],c=LWF.filter(y=>st(y)==i),y=c[rnd(0,c.length-1)],o=shuf([y,...pk2(LWF.filter(z=>st(z)!=i),3,y,z=>z.w)]);
+return{t:`Qaysi so'z «${LTL[i]}» harfi bilan boshlanadi?`,show:"",sp:null,opts:o.map(z=>z.e+" "+z.w),ans:o.indexOf(y),fb:`${LTL[i]} — ${y.e} ${y.w}`}}
+/* darslar: umumiy yordamchilar */
+const wq=(P,ty,lg)=>{const E=P.filter(y=>y.e),x=ty==1?P[rnd(0,P.length-1)]:E[rnd(0,E.length-1)];
+if(ty==0){const o=shuf([x,...pk2(E,3,x,y=>y.e)]);return{t:"Bu so'z qaysi rasm?",show:`<div class=word style="font-size:44px">${x.w}</div>`,sp:null,sa:[x.w,lg],opts:o.map(y=>`<span style="font-size:44px">${y.e}</span>`),ans:o.indexOf(x),fb:x.e+" "+x.w,key:"p"+x.w}}
+if(ty==1){const o=shuf([x,...pk2(P,3,x,y=>y.w)]);return{t:"Eshiting: qaysi so'z?",show:"",sp:[x.w,lg],opts:o.map(y=>y.w),ans:o.indexOf(x),fb:x.e+" "+x.w,key:"h"+x.w}}
+const o=shuf([x,...pk2(E,3,x,y=>y.w)]);return{t:"Bu rasm nima?",show:`<div class=emoji>${x.e}</div>`,sp:null,sa:[x.w,lg],opts:o.map(y=>y.w),ans:o.indexOf(x),fb:x.e+" "+x.w,key:"q"+x.w}};
+const gen=(a,b,s)=>{let n=s?rnd(Math.ceil(a/s),Math.floor(b/s))*s:rnd(a,b);if(!s&&n>=1000&&Math.random()<.35){const d=String(n).split("");d[rnd(1,d.length-1)]="0";n=+d.join("")||n}return n};
+const dis=(n,s)=>{const S=new Set([n]);for(let t=0;t<60&&S.size<4;t++){const d=String(n).split(""),p=s?d.map((c,i)=>c!="0"?i:-1).filter(i=>i>=0):d.map((c,i)=>i),i=p[rnd(0,p.length-1)];d[i]=String(rnd(i?0:1,9));const v=+d.join("");if(v>0&&v<=1e9)S.add(v)}let k=1;while(S.size<4)S.add(n+k++*(s||1));S.delete(n);return[...S].slice(0,3)};
+const pool3=l=>{const p=l.ids.slice();if(l.ids[0]&&Math.random()<.4)p.push(rnd(0,l.ids[0]-1));return p[rnd(0,p.length-1)]};
+function lqN(l,n){const [a,b,s]=l.mix?NLS[rnd(0,NLS.length-1)].slice(1):l.r,m=gen(a,b,s),o=shuf([m,...dis(m,s)]),ty=n%3,sa=[say(m),"uz"],base={opts:o.map(fmt),ans:o.indexOf(m),fb:`${fmt(m)} = ${say(m)}`,key:"n"+m};
+if(ty==0)return{...base,t:"Bu son qanday o'qiladi?",show:`<div id=big>${bigNum(m)}</div>`,sp:null,sa,opts:o.map(say)};
+if(ty==1)return{...base,t:"Eshiting: qaysi son?",show:"",sp:sa};
+return{...base,t:"Bu qaysi son?",show:`<div class=word style="font-size:26px">${say(m)}</div>`,sp:null,sa}}
+function lqR(l,n){const ty=n%3;
+if(l.k=="rw")return wq(RWF.filter(y=>l.ids.includes(y.i)),ty,"ru");
+const i=pool3(l),hi=l.ids[l.ids.length-1],cand=[...Array(Math.max(9,hi+1)).keys()],g=j=>L[j][0]+" "+L[j][0].toLowerCase(),x=RW[i][rnd(0,RW[i].length-1)],lo=L[i][0].toLowerCase();
+if(ty==0){const o=shuf([i,...pk2(cand,3,i,j=>j)]);return{t:"Eshiting: qaysi harf?",show:"",sp:[L[i][1],"ru"],opts:o.map(g),ans:o.indexOf(i),fb:g(i),key:"a"+i}}
+if(ty==1){const nj=cand.filter(j=>j!=i&&!x.w.toLowerCase().includes(L[j][0].toLowerCase())),o=shuf([i,...shuf(nj).slice(0,3)]);return{t:"Bu so'zda qaysi harf bor?",show:`<div class=word style="font-size:40px">${x.e} ${x.w}</div>`,sp:null,sa:[x.w,"ru"],opts:o.map(g),ans:o.indexOf(i),fb:`${g(i)} — ${x.w}`,key:"b"+x.w}}
+const o=shuf([x,...pk2(RWF.filter(y=>!y.w.toLowerCase().includes(lo)),3,x,y=>y.w)]);return{t:`«${g(i)}» harfi qaysi so'zda bor?`,show:`<div class=letter style="font-size:80px">${L[i][0]}</div>`,sp:null,sa:[x.w,"ru"],opts:o.map(y=>y.e+" "+y.w),ans:o.indexOf(x),fb:`${x.e} ${x.w}`,key:"c"+x.w}}
+function lqT(l,n){const A=[...Array(29).keys()],ty=n%3,u=c=>LTU.includes(c);
+if(l.k=="tw")return wq(LWF.filter(y=>l.ids.includes(y.i)),ty,"uz");
+if(l.k=="tv"){if(n%2==0){const i=rnd(0,28);return{t:"Bu harf unlimi yoki undosh?",show:`<div class=letter style="font-size:80px">${lgl(i)}</div>`,sp:[LTN[i],"uz"],opts:["Unli","Undosh"],ans:u(LTL[i])?0:1,fb:`${lgl(i)} — ${u(LTL[i])?"unli":"undosh"}`,key:"u"+i}}
+const y=A.filter(j=>u(LTL[j]))[rnd(0,5)],o=shuf([y,...shuf(A.filter(j=>!u(LTL[j]))).slice(0,3)]);return{t:"Qaysi harf unli?",show:"",sp:null,opts:o.map(lgl),ans:o.indexOf(y),fb:lgl(y),key:"w"+y}}
+if(l.k=="ts"){const CS="b d f g h j k l m n p q r s t v x y z".split(" "),VS=l.v==3?["a","o","u"]:["a","e","i","o","u","o‘"],c=CS[rnd(0,CS.length-1)],v=VS[rnd(0,VS.length-1)],s=c+v,ds=shuf([...VS.filter(x=>x!=v).map(x=>c+x),...shuf(CS.filter(x=>x!=c)).slice(0,3).map(x=>x+v)]),o=shuf([s,...ds.slice(0,3)]);
+return{t:"Eshiting: qaysi bo'g'in?",show:"",sp:[s,"uz"],opts:o,ans:o.indexOf(s),fb:s,key:s}}
+const i=pool3(l),hi=l.ids[l.ids.length-1],cand=A.slice(0,Math.max(9,hi+1)),t2=(i==28&&ty==2)?0:ty;
+if(t2==0){const o=shuf([i,...pk2(cand,3,i,j=>LTN[j])]);return{t:"Bu harf qanday o'qiladi?",show:`<div class=letter style="font-size:90px">${lgl(i)}</div>`,sp:null,sa:[LTN[i],"uz"],opts:o.map(j=>LTN[j]),ans:o.indexOf(i),fb:`${lgl(i)} — «${LTN[i]}»`,key:"a"+i}}
+if(t2==1){const o=shuf([i,...pk2(cand,3,i,j=>j)]);return{t:"Eshiting: qaysi harf?",show:"",sp:[LTN[i],"uz"],opts:o.map(lgl),ans:o.indexOf(i),fb:lgl(i),key:"b"+i}}
+const ws=LWF.filter(y=>startL(y.w)==i),y=ws[rnd(0,ws.length-1)],o=shuf([i,...pk2(cand,3,i,j=>j)]);
+return{t:"Bu so'z qaysi harfdan boshlanadi?",show:`<div class=emoji>${y.e||"❓"}</div><div class=word>${y.w}</div>`,sp:null,sa:[y.w,"uz"],opts:o.map(lgl),ans:o.indexOf(i),fb:`${lgl(i)} — ${y.e} ${y.w}`,key:"c"+i+y.w}}
+function lq(l,n){return({num:lqN,rl:lqR,rw:lqR,tl:lqT,tv:lqT,ts:lqT,tw:lqT}[l.k]||lq0)(l,n)}
+const NLS=[["Birliklar (1–9)",1,9],["O'nlik (10–20)",10,20],["O'nliklar (30–90)",30,90,10],["21–99",21,99],["Yuzliklar (100–900)",100,900,100],["101–999",101,999],["Minglar (1000–9000)",1000,9000,1000],["1001–9999",1001,9999],["10 000–99 999",1e4,99999],["100 000–999 999",1e5,999999],["Millionlar",1e6,999999999]];
+const LN=NLS.map((r,i)=>({h:i<4?"Kichik sonlar":i<8?"Yuzlar va minglar":"Katta sonlar",t:r[0],k:"num",r:r.slice(1)}));LN.push({h:"Katta sonlar",t:"Aralash takrorlash",k:"num",mix:true});
+const LR=[];for(let g=0;g<11;g++){const ids=[0,1,2].map(x=>g*3+x);LR.push({h:"Harflar",t:"Harflar "+(g+1),sub:ids.map(i=>L[i][0]).join(" "),k:"rl",ids})}
+for(let g=0;g<6;g++){const ids=[0,1,2,3,4,5].map(x=>g*6+x).filter(x=>x<33);LR.push({h:"So'zlar",t:"So'zlar "+(g+1),sub:ids.map(i=>L[i][0]).join(""),k:"rw",ids})}
+const LTS=[];for(let g=0;g<10;g++){const ids=[0,1,2].map(x=>g*3+x).filter(x=>x<29);LTS.push({h:"Harflar",t:"Harflar "+(g+1),sub:ids.map(i=>LTL[i]).join(" "),k:"tl",ids})}
+LTS.push({h:"Unli va undosh",t:"Unli va undosh harflar",sub:"A E I O U O‘",k:"tv"},{h:"Bo'g'inlar",t:"Bo'g'inlar: a, o, u",sub:"ba bo bu",k:"ts",v:3},{h:"Bo'g'inlar",t:"Bo'g'inlar: hamma unlilar",sub:"be bi bo‘",k:"ts",v:6});
+for(let g=0;g<3;g++){const ids=Array.from({length:10},(_,x)=>g*10+x).filter(x=>x<29);LTS.push({h:"So'zlar",t:"So'zlar "+(g+1),sub:ids.map(i=>LTL[i]).join(" "),k:"tw",ids})}
+const LESS={0:LN,1:LR,2:LES,3:LTS};let CUR=LES;
+gk[3]="read";
+
+render();loadRec().then(()=>{if(sec==4)vRec()});
 </script></body></html>
